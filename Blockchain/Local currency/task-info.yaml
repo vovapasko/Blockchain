@@ -1,0 +1,108 @@
+type: edu
+custom_name: stage6
+files:
+- name: test/BlockchainTest.java
+  visible: false
+  learner_created: false
+- name: src/blockchain/Main.java
+  visible: true
+  text: |
+    package blockchain;
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class Main {
+        public static void main(String[] args) {
+            List<Block> chain = new ArrayList<>();
+            Block myBlock = new Block("0", 1);
+            chain.add(myBlock);
+            for (int i = 1; i < 5; i++) {
+                Block previousBlock = chain.get(i - 1);
+                Block newBlock = new Block(previousBlock.getMyHash(), previousBlock.getId() + 1);
+                chain.add(newBlock);
+            }
+            chain.forEach(System.out::println);
+
+        }
+
+    }
+  learner_created: false
+- name: src/blockchain/StringUtil.java
+  visible: true
+  text: |+
+    package blockchain;
+
+    import java.nio.charset.StandardCharsets;
+    import java.security.MessageDigest;
+
+    class StringUtil {
+        /* Applies Sha256 to a string and returns a hash. */
+        public static String applySha256(String input) {
+            try {
+                MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                /* Applies sha256 to our input */
+                byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+                StringBuilder hexString = new StringBuilder();
+                for (byte elem : hash) {
+                    String hex = Integer.toHexString(0xff & elem);
+                    if (hex.length() == 1) hexString.append('0');
+                    hexString.append(hex);
+                }
+                return hexString.toString();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+
+  learner_created: false
+- name: src/blockchain/Block.java
+  visible: true
+  text: |
+    package blockchain;
+
+    import java.util.Date;
+
+    public class Block {
+        private long timestamp;
+        private String previousHash;
+        private String myHash;
+        private int id;
+
+
+        Block(String previousHash, int id) {
+            this.timestamp = new Date().getTime();
+            this.previousHash = previousHash;
+            this.id = id;
+            this.myHash = getBlockHash();
+        }
+
+        public String getMyHash() {
+            return myHash;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        private String getBlockHash() {
+            String timestampString = Long.toString(timestamp);
+            String idString = Integer.toString(id);
+            String concatStr = timestampString + idString + previousHash + myHash;
+            return StringUtil.applySha256(concatStr);
+        }
+
+        @Override
+        public String toString() {
+            String outputStr = "Block: \nId: " + Integer.toString(id) + "\nTimestamp: " + Long.toString(timestamp)
+                    + "\nHash of the previous block: \n" + previousHash + "\nHash of the block: \n" + myHash + "\n";
+
+            return outputStr;
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/50/stages/276/implement
+status: Unchecked
+record: -1

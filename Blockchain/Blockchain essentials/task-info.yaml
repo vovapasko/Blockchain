@@ -1,0 +1,26 @@
+type: edu
+custom_name: stage1
+files:
+- name: src/blockchain/Main.java
+  visible: true
+  text: |
+    package blockchain;
+
+    public class Main {
+        public static void main(String[] args) {
+            System.out.println("Hello World!");
+        }
+    }
+  learner_created: false
+- name: test/BlockchainTest.java
+  visible: false
+  learner_created: false
+- name: src/blockchain/Block.java
+  visible: true
+  learner_created: true
+- name: src/blockchain/StringUtil.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/50/stages/271/implement
+status: Solved
+record: 3
