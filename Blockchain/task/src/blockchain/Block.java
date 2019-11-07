@@ -1,14 +1,36 @@
 package blockchain;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Block {
     private long timestamp;
     private String previousHash;
     private String myHash;
     private int id;
+    private int nonce;
+    private long miningTime;
 
+    public long getMiningTime() {
+        return miningTime;
+    }
+
+    public void setMiningTime(long miningTime) {
+        this.miningTime = miningTime;
+    }
+
+    public int getNonce() {
+        return nonce;
+    }
+
+    public void setNonce(int nonce) {
+        this.nonce = nonce;
+    }
+
+
+    public void setMyHash(String myHash) {
+        this.myHash = myHash;
+    }
 
     Block(String previousHash, int id) {
         this.timestamp = new Date().getTime();
@@ -25,17 +47,16 @@ public class Block {
         return id;
     }
 
-    private String getBlockHash() {
-        String timestampString = Long.toString(timestamp);
-        String idString = Integer.toString(id);
-        String concatStr = timestampString + idString + previousHash + myHash;
+    public String getBlockHash() {
+        String concatStr = timestamp + id + previousHash + myHash + nonce;
         return StringUtil.applySha256(concatStr);
     }
 
     @Override
     public String toString() {
-        String returnStr = "Block: \nId: " + id + "\nTimestamp: " + timestamp +
-                "\nHash of the previous block: \n" + previousHash + "\nHash of the block: \n" + myHash + "\n";
+        String returnStr = "Block: \nId: " + id + "\nTimestamp: " + timestamp + "\nMagic number: " + nonce +
+                "\nHash of the previous block: \n" + previousHash + "\nHash of the block: \n" + myHash +
+                "\nBlock was generating for " + TimeUnit.MILLISECONDS.toSeconds(miningTime) + " seconds\n";
         return returnStr;
     }
 }
