@@ -3,7 +3,11 @@ package blockchain;
 import java.util.Date;
 
 public class Miner {
-    private int zerosAmount = 2;
+    private int zerosAmount;
+
+    Miner(int zerosAmount) {
+        this.zerosAmount = zerosAmount;
+    }
 
     public void setZerosAmount(int zerosAmount) {
         this.zerosAmount = zerosAmount;

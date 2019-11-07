@@ -6,8 +6,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        Miner miner = new Miner();
-        miner.setZerosAmount(2);
+        Miner miner = new Miner(5);
 
         List<Block> chain = new ArrayList<>();
         Block myBlock = new Block("0", 1);

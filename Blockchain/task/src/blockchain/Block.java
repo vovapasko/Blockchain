@@ -1,6 +1,7 @@
 package blockchain;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Block {
     private long timestamp;
@@ -53,8 +54,9 @@ public class Block {
 
     @Override
     public String toString() {
-        String returnStr = "Block: \nId: " + id + "\nTimestamp: " + timestamp +
-                "\nHash of the previous block: \n" + previousHash + "\nHash of the block: \n" + myHash + "\n";
+        String returnStr = "Block: \nId: " + id + "\nTimestamp: " + timestamp + "\nMagic number: " + nonce +
+                "\nHash of the previous block: \n" + previousHash + "\nHash of the block: \n" + myHash +
+                "\nBlock was generating for " + TimeUnit.MILLISECONDS.toSeconds(miningTime) + " seconds\n";
         return returnStr;
     }
 }
